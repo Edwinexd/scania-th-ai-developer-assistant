@@ -1,0 +1,44 @@
+{
+  "name": "scania-th-ai-developer-assistant",
+  "version": "0.0.1",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edwinexd/scania-th-ai-developer-assistant.git"
+  },
+  "keywords": [],
+  "author": "Edwinexd",
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/Edwinexd/scania-th-ai-developer-assistant/issues"
+  },
+  "homepage": "https://github.com/Edwinexd/scania-th-ai-developer-assistant#readme",
+  "description": "",
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^4.2.0",
+    "@stylistic/eslint-plugin-js": "^4.2.0",
+    "@stylistic/eslint-plugin-ts": "^4.2.0",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.18",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "eslint": "^9.27.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.56",
+    "@langchain/mistralai": "^0.2.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "langchain": "^0.3.26"
+  }
+}
