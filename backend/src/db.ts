@@ -1,11 +1,11 @@
-import { Client } from "pg";
+import { Pool, PoolClient } from "pg";
 
-const client = new Client({
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
 
-client.once("connect", (client: Client) => {
+pool.once("connect", (client: PoolClient) => {
     // Simple DB-layout similar to the one used on ChatGPT, assumes one user
     client.query(`
         CREATE TABLE IF NOT EXISTS conversations (
@@ -44,31 +44,31 @@ export interface Message {
 }
 
 export async function getConversations(): Promise<Conversation[]> {
-    const res = await client.query<Conversation>("SELECT * FROM conversations ORDER BY created_at DESC");
+    const res = await pool.query<Conversation>("SELECT * FROM conversations ORDER BY created_at DESC");
     return res.rows;
 }
 
 export async function getConversation(conversationId: number): Promise<Conversation | null> {
-    const res = await client.query<Conversation>("SELECT * FROM conversations WHERE id = $1", [conversationId]);
+    const res = await pool.query<Conversation>("SELECT * FROM conversations WHERE id = $1", [conversationId]);
     return res.rows[0] || null;
 }
 
 export async function getMessages(conversationId: number): Promise<Message[]> {
-    const res = await client.query<Message>("SELECT * FROM messages WHERE conversation_id = $1 ORDER BY created_at DESC", [conversationId]);
+    const res = await pool.query<Message>("SELECT * FROM messages WHERE conversation_id = $1 ORDER BY created_at DESC", [conversationId]);
     return res.rows;
 }
 
 export async function addConversation(title: string | null): Promise<Conversation> {
-    const res = await client.query<Conversation>("INSERT INTO conversations (title) VALUES ($1) RETURNING *", [title]);
+    const res = await pool.query<Conversation>("INSERT INTO conversations (title) VALUES ($1) RETURNING *", [title]);
     return res.rows[0];
 }
 
 export async function addMessage(conversationId: number, query: string, response: string | null): Promise<Message> {
-    const res = await client.query<Message>("INSERT INTO messages (conversation_id, query, response) VALUES ($1, $2, $3) RETURNING *", [conversationId, query, response]);
+    const res = await pool.query<Message>("INSERT INTO messages (conversation_id, query, response) VALUES ($1, $2, $3) RETURNING *", [conversationId, query, response]);
     return res.rows[0];
 }
 
 export async function deleteConversation(conversationId: number): Promise<void> {
-    await client.query("DELETE FROM conversations WHERE id = $1", [conversationId]);
+    await pool.query("DELETE FROM conversations WHERE id = $1", [conversationId]);
 }
 

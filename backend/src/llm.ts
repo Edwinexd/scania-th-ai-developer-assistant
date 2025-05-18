@@ -23,7 +23,7 @@ export async function getDevResponse(question: string) {
 
 export async function getTitle(query: string, response: string) {
     const messages = [
-        new SystemMessage("Generate a title for the following conversation, 3 words max."),
+        new SystemMessage("Generate a title for the following conversation, 3 words max, only return the suggested title - nothing else."),
         new HumanMessage(`Query: ${query}\nResponse: ${response}`),
     ];
     return (await summaryModel.invoke(messages)).text;
