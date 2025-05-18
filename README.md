@@ -2,6 +2,14 @@
 
 A conversational AI assistant for developers, built with React, Express, PostgreSQL and MistralAI.
 
+## Screenshots
+
+![Entire Application Screenshot](./images/entire_app.png)
+*The complete AI Developer Assistant application interface*
+
+![Quicksort Demo](./images/quicksort_demo.png)
+*Example of the assistant helping with a quicksort algorithm*
+
 ## Development Process
 1. Designed the database schema & corresponding API endpoints, I decided to follow a conversations-oriented approach, where each conversation can have multiple messages.
 2. Implemented the backend with Express and made a simple DB binding (`./backend/src/db.ts`) manually. Also made a simple langchain wrapper for the MistralAI API (`./backend/src/llm.ts`) to handle the API calls and responses (I decided to use the MistralAI API as I've been using it for other projects and had an account setup).
