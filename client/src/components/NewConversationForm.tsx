@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { createConversation } from '../binding'
+import { useState } from "react"
+import { createConversation } from "../binding"
 
 interface NewConversationFormProps {
   onConversationCreated: () => void
@@ -19,7 +19,7 @@ export function NewConversationForm({ onConversationCreated }: NewConversationFo
       await createConversation("")
       onConversationCreated()
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to create conversation'))
+      setError(err instanceof Error ? err : new Error("Failed to create conversation"))
     } finally {
       setIsLoading(false)
     }
@@ -32,11 +32,11 @@ export function NewConversationForm({ onConversationCreated }: NewConversationFo
         disabled={isLoading}
         className={`w-full px-4 py-2 rounded-lg text-white ${
           isLoading
-            ? 'bg-indigo-400 cursor-not-allowed'
-            : 'bg-indigo-600 hover:bg-indigo-700'
+            ? "bg-indigo-400 cursor-not-allowed"
+            : "bg-indigo-600 hover:bg-indigo-700"
         }`}
       >
-        {isLoading ? 'Creating...' : 'New Conversation'}
+        {isLoading ? "Creating..." : "New Conversation"}
       </button>
       {error && <p className="mt-2 text-red-400 text-sm">{error.message}</p>}
     </div>

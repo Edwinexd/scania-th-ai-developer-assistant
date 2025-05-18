@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import type { Conversation, Message } from '../binding'
-import { fetchConversation, sendMessage } from '../binding'
+import { useState, useEffect } from "react"
+import type { Conversation, Message } from "../binding"
+import { fetchConversation, sendMessage } from "../binding"
 
 interface ConversationDetailsProps {
   conversation: Conversation
@@ -11,7 +11,7 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
-  const [newMessage, setNewMessage] = useState('')
+  const [newMessage, setNewMessage] = useState("")
   const [isSending, setIsSending] = useState(false)
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
         const data = await fetchConversation(conversation.id)
         setMessages(data.messages)
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to load conversation'))
+        setError(err instanceof Error ? err : new Error("Failed to load conversation"))
       } finally {
         setIsLoading(false)
       }
@@ -42,10 +42,10 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
     try {
       const message = await sendMessage(conversation.id, newMessage.trim())
       setMessages(prev => [...prev, message])
-      setNewMessage('')
+      setNewMessage("")
       onRefresh() // Refresh conversation list to update titles
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to send message'))
+      setError(err instanceof Error ? err : new Error("Failed to send message"))
     } finally {
       setIsSending(false)
     }
@@ -93,7 +93,7 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
                 </div>
                 <div className="p-3">
                   <div className="font-semibold">AI:</div>
-                  <div className="whitespace-pre-wrap">{message.response || 'Processing...'}</div>
+                  <div className="whitespace-pre-wrap">{message.response || "Processing..."}</div>
                 </div>
               </div>
             ))
@@ -116,11 +116,11 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
             disabled={!newMessage.trim() || isSending}
             className={`px-4 py-2 rounded-r-lg text-white ${
               !newMessage.trim() || isSending
-                ? 'bg-indigo-400'
-                : 'bg-indigo-600 hover:bg-indigo-700'
+                ? "bg-indigo-400"
+                : "bg-indigo-600 hover:bg-indigo-700"
             }`}
           >
-            {isSending ? 'Sending...' : 'Send'}
+            {isSending ? "Sending..." : "Send"}
           </button>
         </form>
       </div>

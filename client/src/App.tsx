@@ -1,12 +1,12 @@
-import { useState, useCallback } from 'react'
-import type { Conversation } from './binding'
-import { Sidebar } from './components/Sidebar'
-import { ConversationDetails } from './components/ConversationDetails'
-import { createConversation } from './binding'
-import './App.css'
+import { useState, useCallback } from "react"
+import type { Conversation } from "./binding"
+import { Sidebar } from "./components/Sidebar"
+import { ConversationDetails } from "./components/ConversationDetails"
+import { createConversation } from "./binding"
+import "./App.css"
 
 // Define a custom event name
-export const REFRESH_CONVERSATIONS_EVENT = 'refresh-conversations'
+export const REFRESH_CONVERSATIONS_EVENT = "refresh-conversations"
 
 function App() {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
@@ -26,7 +26,7 @@ function App() {
     window.dispatchEvent(new Event(REFRESH_CONVERSATIONS_EVENT))
   }, [])
 
-  const [newMessageQuery, setNewMessageQuery] = useState('')
+  const [newMessageQuery, setNewMessageQuery] = useState("")
   const [welcomeError, setWelcomeError] = useState<Error | null>(null)
 
   const handleStartNewChat = async (e: React.FormEvent) => {
@@ -38,11 +38,11 @@ function App() {
     
     try {
       const result = await createConversation(newMessageQuery.trim())
-      setNewMessageQuery('')
+      setNewMessageQuery("")
       setSelectedConversation(result.conversation)
       window.dispatchEvent(new Event(REFRESH_CONVERSATIONS_EVENT))
     } catch (error) {
-      setWelcomeError(error instanceof Error ? error : new Error('Failed to create conversation'))
+      setWelcomeError(error instanceof Error ? error : new Error("Failed to create conversation"))
     } finally {
       setIsCreatingNewConversation(false)
     }
@@ -91,11 +91,11 @@ function App() {
                       disabled={!newMessageQuery.trim() || isCreatingNewConversation}
                       className={`px-6 py-3 text-white font-medium ${
                         !newMessageQuery.trim() || isCreatingNewConversation
-                          ? 'bg-indigo-400 cursor-not-allowed'
-                          : 'bg-indigo-600 hover:bg-indigo-700'
+                          ? "bg-indigo-400 cursor-not-allowed"
+                          : "bg-indigo-600 hover:bg-indigo-700"
                       }`}
                     >
-                      {isCreatingNewConversation ? 'Sending...' : 'Send'}
+                      {isCreatingNewConversation ? "Sending..." : "Send"}
                     </button>
                   </div>
                 </div>

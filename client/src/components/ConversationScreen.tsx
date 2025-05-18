@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { sendMessage } from '../binding'
-import type { Conversation, Message } from '../binding'
+import { useState } from "react"
+import { sendMessage } from "../binding"
+import type { Conversation, Message } from "../binding"
 
 interface ConversationScreenProps {
   conversation: Conversation
@@ -9,7 +9,7 @@ interface ConversationScreenProps {
 }
 
 export function ConversationScreen({ conversation, messages, onNewMessage }: ConversationScreenProps) {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
@@ -23,9 +23,9 @@ export function ConversationScreen({ conversation, messages, onNewMessage }: Con
     try {
       const message = await sendMessage(conversation.id, query)
       onNewMessage(message)
-      setQuery('')
+      setQuery("")
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to send message'))
+      setError(err instanceof Error ? err : new Error("Failed to send message"))
     } finally {
       setIsLoading(false)
     }
@@ -70,11 +70,11 @@ export function ConversationScreen({ conversation, messages, onNewMessage }: Con
             disabled={!query.trim() || isLoading}
             className={`px-4 py-2 rounded-r-lg text-white ${
               !query.trim() || isLoading
-                ? 'bg-indigo-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700'
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
             }`}
           >
-            {isLoading ? 'Sending...' : 'Send'}
+            {isLoading ? "Sending..." : "Send"}
           </button>
         </form>
         {error && <p className="mt-2 text-red-500 text-sm">{error.message}</p>}

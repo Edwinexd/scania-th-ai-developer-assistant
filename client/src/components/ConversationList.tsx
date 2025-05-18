@@ -1,4 +1,4 @@
-import type { Conversation } from '../binding'
+import type { Conversation } from "../binding"
 
 interface ConversationListProps {
   conversations: Conversation[]
@@ -48,7 +48,7 @@ export function ConversationList({
           <li 
             key={conversation.id} 
             className={`flex justify-between items-center p-2 rounded cursor-pointer hover:bg-gray-700 ${
-              selectedId === conversation.id ? 'bg-gray-700' : ''
+              selectedId === conversation.id ? "bg-gray-700" : ""
             }`}
             onClick={() => onSelect(conversation)}
           >

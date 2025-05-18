@@ -1,6 +1,6 @@
-import type { Conversation } from '../binding'
-import { ConversationList } from './ConversationList'
-import { useConversations } from '../hooks/useConversations'
+import type { Conversation } from "../binding"
+import { ConversationList } from "./ConversationList"
+import { useConversations } from "../hooks/useConversations"
 
 interface SidebarProps {
   onSelectConversation: (conversation: Conversation) => void

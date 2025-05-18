@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import type { Conversation } from '../binding'
-import { fetchConversations, deleteConversation } from '../binding'
-import { REFRESH_CONVERSATIONS_EVENT } from '../App'
+import { useState, useEffect } from "react"
+import type { Conversation } from "../binding"
+import { fetchConversations, deleteConversation } from "../binding"
+import { REFRESH_CONVERSATIONS_EVENT } from "../App"
 
 export function useConversations() {
   const [conversations, setConversations] = useState<Conversation[]>([])
@@ -16,7 +16,7 @@ export function useConversations() {
       const data = await fetchConversations()
       setConversations(data)
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch conversations'))
+      setError(err instanceof Error ? err : new Error("Failed to fetch conversations"))
     } finally {
       setIsLoading(false)
     }
@@ -42,7 +42,7 @@ export function useConversations() {
         prevConversations.filter(conversation => conversation.id !== id)
       )
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to delete conversation'))
+      setError(err instanceof Error ? err : new Error("Failed to delete conversation"))
     }
   }
 
