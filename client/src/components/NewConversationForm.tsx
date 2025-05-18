@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { createConversation } from "../binding"
+import { Button } from "./Button"
 
 interface NewConversationFormProps {
   onConversationCreated: () => void
@@ -27,17 +28,13 @@ export function NewConversationForm({ onConversationCreated }: NewConversationFo
 
   return (
     <div className="border-b border-gray-700 p-4 bg-gray-800">
-      <button
+      <Button
         onClick={handleNewConversation}
         disabled={isLoading}
-        className={`w-full px-4 py-2 rounded-lg text-white ${
-          isLoading
-            ? "bg-indigo-400 cursor-not-allowed"
-            : "bg-indigo-600 hover:bg-indigo-700"
-        }`}
+        fullWidth
       >
         {isLoading ? "Creating..." : "New Conversation"}
-      </button>
+      </Button>
       {error && <p className="mt-2 text-red-400 text-sm">{error.message}</p>}
     </div>
   )

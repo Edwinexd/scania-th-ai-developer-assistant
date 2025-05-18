@@ -3,6 +3,7 @@ import type { Conversation } from "./binding"
 import { Sidebar } from "./components/Sidebar"
 import { ConversationDetails } from "./components/ConversationDetails"
 import { createConversation } from "./binding"
+import { MessageInput } from "./components/MessageInput"
 import "./App.css"
 
 // Define a custom event name
@@ -10,8 +11,6 @@ export const REFRESH_CONVERSATIONS_EVENT = "refresh-conversations"
 
 function App() {
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null)
-  const [isCreatingNewConversation, setIsCreatingNewConversation] = useState(false)
-
   const handleSelectConversation = (conversation: Conversation) => {
     setSelectedConversation(conversation)
   }
@@ -26,25 +25,13 @@ function App() {
     window.dispatchEvent(new Event(REFRESH_CONVERSATIONS_EVENT))
   }, [])
 
-  const [newMessageQuery, setNewMessageQuery] = useState("")
-  const [welcomeError, setWelcomeError] = useState<Error | null>(null)
-
-  const handleStartNewChat = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!newMessageQuery.trim() || isCreatingNewConversation) return
-    
-    setIsCreatingNewConversation(true)
-    setWelcomeError(null)
-    
+  const handleStartNewChat = async (message: string) => {
     try {
-      const result = await createConversation(newMessageQuery.trim())
-      setNewMessageQuery("")
+      const result = await createConversation(message)
       setSelectedConversation(result.conversation)
       window.dispatchEvent(new Event(REFRESH_CONVERSATIONS_EVENT))
     } catch (error) {
-      setWelcomeError(error instanceof Error ? error : new Error("Failed to create conversation"))
-    } finally {
-      setIsCreatingNewConversation(false)
+      throw error instanceof Error ? error : new Error("Failed to create conversation")
     }
   }
   
@@ -72,34 +59,13 @@ function App() {
             </div>
             
             <div className="p-6 border-t border-gray-200">
-              <form onSubmit={handleStartNewChat} className="max-w-3xl mx-auto">
-                <div className="flex flex-col space-y-4">
-                  {welcomeError && (
-                    <div className="text-red-500 text-sm">{welcomeError.message}</div>
-                  )}
-                  <div className="flex shadow-lg rounded-lg overflow-hidden">
-                    <input
-                      type="text"
-                      value={newMessageQuery}
-                      onChange={(e) => setNewMessageQuery(e.target.value)}
-                      placeholder="Ask me anything..."
-                      className="flex-1 px-4 py-3 focus:outline-none text-gray-700"
-                      disabled={isCreatingNewConversation}
-                    />
-                    <button
-                      type="submit"
-                      disabled={!newMessageQuery.trim() || isCreatingNewConversation}
-                      className={`px-6 py-3 text-white font-medium ${
-                        !newMessageQuery.trim() || isCreatingNewConversation
-                          ? "bg-indigo-400 cursor-not-allowed"
-                          : "bg-indigo-600 hover:bg-indigo-700"
-                      }`}
-                    >
-                      {isCreatingNewConversation ? "Sending..." : "Send"}
-                    </button>
-                  </div>
-                </div>
-              </form>
+              <div className="max-w-3xl mx-auto">
+                <MessageInput 
+                  onSendMessage={handleStartNewChat}
+                  placeholder="Ask me anything..."
+                  loadingText="Creating conversation..."
+                />
+              </div>
             </div>
           </div>
         )}

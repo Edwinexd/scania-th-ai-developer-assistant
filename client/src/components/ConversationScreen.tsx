@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { sendMessage } from "../binding"
 import type { Conversation, Message } from "../binding"
+import { sendMessage } from "../binding"
+import { MessageInput } from "./MessageInput"
 
 interface ConversationScreenProps {
   conversation: Conversation
@@ -9,26 +9,9 @@ interface ConversationScreenProps {
 }
 
 export function ConversationScreen({ conversation, messages, onNewMessage }: ConversationScreenProps) {
-  const [query, setQuery] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!query.trim()) return
-
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      const message = await sendMessage(conversation.id, query)
-      onNewMessage(message)
-      setQuery("")
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error("Failed to send message"))
-    } finally {
-      setIsLoading(false)
-    }
+  const handleSendMessage = async (messageText: string) => {
+    const message = await sendMessage(conversation.id, messageText)
+    onNewMessage(message)
   }
 
   return (
@@ -54,30 +37,14 @@ export function ConversationScreen({ conversation, messages, onNewMessage }: Con
           </div>
         )}
       </div>
-
-      <div className="border-t p-4 bg-white">
-        <form onSubmit={handleSubmit} className="flex">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+      
+      <div className="p-6 border-t border-gray-200">
+        <div className="max-w-3xl mx-auto">
+          <MessageInput 
+            onSendMessage={handleSendMessage}
             placeholder="Type your message..."
-            className="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            disabled={isLoading}
           />
-          <button
-            type="submit"
-            disabled={!query.trim() || isLoading}
-            className={`px-4 py-2 rounded-r-lg text-white ${
-              !query.trim() || isLoading
-                ? "bg-indigo-400 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
-            }`}
-          >
-            {isLoading ? "Sending..." : "Send"}
-          </button>
-        </form>
-        {error && <p className="mt-2 text-red-500 text-sm">{error.message}</p>}
+        </div>
       </div>
     </div>
   )
