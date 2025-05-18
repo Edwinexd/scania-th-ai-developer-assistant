@@ -41,7 +41,7 @@ export function ConversationDetails({ conversation, onRefresh }: ConversationDet
 
     try {
       const message = await sendMessage(conversation.id, newMessage.trim())
-      setMessages(prev => [message, ...prev])
+      setMessages(prev => [...prev, message])
       setNewMessage('')
       onRefresh() // Refresh conversation list to update titles
     } catch (err) {

@@ -50,7 +50,8 @@ router.post("/:id/messages", conversationMiddleware, async (req: ConversationReq
         res.status(400).json({ error: "Query is required" });
         return;
     }
-    const response = await getDevResponse(query);
+    const prevMessages = await getMessages(req.conversationId!);
+    const response = await getDevResponse(query, prevMessages);
     const message = await addMessage(req.conversationId!, query, response.text);
     res.status(201).json(message);
 });

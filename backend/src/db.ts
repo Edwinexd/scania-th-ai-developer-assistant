@@ -17,7 +17,7 @@ pool.once("connect", (client: PoolClient) => {
             id SERIAL PRIMARY KEY,
             conversation_id INTEGER NOT NULL,
             query TEXT NOT NULL,
-            response TEXT NULL,
+            response TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT NOW(),
             FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON UPDATE CASCADE ON DELETE CASCADE
         );
@@ -39,7 +39,7 @@ export interface Message {
     id: number;
     conversation_id: number;
     query: string;
-    response: string | null;
+    response: string;
     created_at: Date;
 }
 
@@ -54,7 +54,7 @@ export async function getConversation(conversationId: number): Promise<Conversat
 }
 
 export async function getMessages(conversationId: number): Promise<Message[]> {
-    const res = await pool.query<Message>("SELECT * FROM messages WHERE conversation_id = $1 ORDER BY created_at DESC", [conversationId]);
+    const res = await pool.query<Message>("SELECT * FROM messages WHERE conversation_id = $1 ORDER BY created_at ASC", [conversationId]);
     return res.rows;
 }
 
@@ -63,7 +63,7 @@ export async function addConversation(title: string | null): Promise<Conversatio
     return res.rows[0];
 }
 
-export async function addMessage(conversationId: number, query: string, response: string | null): Promise<Message> {
+export async function addMessage(conversationId: number, query: string, response: string): Promise<Message> {
     const res = await pool.query<Message>("INSERT INTO messages (conversation_id, query, response) VALUES ($1, $2, $3) RETURNING *", [conversationId, query, response]);
     return res.rows[0];
 }

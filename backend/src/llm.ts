@@ -1,6 +1,11 @@
-import  { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import  { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
 import { ChatMistralAI } from "@langchain/mistralai";
 
+
+export interface Message {
+    query: string;
+    response: string;
+}
 
 const model = new ChatMistralAI({
     model: "mistral-large-latest",
@@ -16,8 +21,11 @@ const BASE_MESSAGES = [
     new SystemMessage("You are a developer assistant that concisely answers a developer's question with assumption of the user having knowledge of programming."),
 ];
 
-export async function getDevResponse(question: string) {
-    const messages = [...BASE_MESSAGES, new HumanMessage(question)];
+export async function getDevResponse(question: string, history: Message[] = []) {
+    const messages = [...BASE_MESSAGES,  
+        ...history.map((msg) => [new HumanMessage(msg.query), new AIMessage(msg.response)]).flat(),
+        new HumanMessage(question)
+    ];
     return await model.invoke(messages);
 }
 

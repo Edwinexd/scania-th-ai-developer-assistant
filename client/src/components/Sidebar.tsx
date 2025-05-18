@@ -5,15 +5,13 @@ import { useConversations } from '../hooks/useConversations'
 interface SidebarProps {
   onSelectConversation: (conversation: Conversation) => void
   selectedConversationId?: number
-  onNewConversation: () => Promise<void>
-  isCreatingNewConversation: boolean
+  onNewConversation: () => void
 }
 
 export function Sidebar({ 
   onSelectConversation, 
   selectedConversationId, 
-  onNewConversation, 
-  isCreatingNewConversation 
+  onNewConversation 
 }: SidebarProps) {
   const { 
     conversations, 
@@ -31,14 +29,9 @@ export function Sidebar({
       <div className="border-b border-gray-700 p-4 bg-gray-800">
         <button
           onClick={onNewConversation}
-          disabled={isCreatingNewConversation}
-          className={`w-full px-4 py-2 rounded-lg text-white ${
-            isCreatingNewConversation
-              ? 'bg-indigo-400 cursor-not-allowed'
-              : 'bg-indigo-600 hover:bg-indigo-700'
-          }`}
+          className="w-full px-4 py-2 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700"
         >
-          {isCreatingNewConversation ? 'Creating...' : 'New Conversation'}
+          New Conversation
         </button>
       </div>
       
