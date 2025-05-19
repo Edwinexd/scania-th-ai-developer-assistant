@@ -16,7 +16,8 @@ A conversational AI assistant for developers, built with React, Express, Postgre
 3. Added ESLint and made a simple docker compose (`./compose.yaml`) to run the backend and PostgreSQL.
 4. Generated a frontend with Vite with React/TS and added Tailwind CSS for some basic styling.
 5. Wrote a binding to the backend API (`./client/src/binding.ts`) and then used Github Copilot Agent to generate a basic frontend, iterated to split up into more components and change some descisions (e.x. changing from a counter-state to using browser events and having create new conversation on the start page rather than a button in the sidebar).
-6. Generated a simple README (again with Github Copilot Agent) and added the development process/simplifications manually. 
+6. Revised backend to add some basic logging with `morgan`.
+7. Generated a simple README (again with Github Copilot Agent) and added the development process/simplifications manually. 
 
 
 ### Major Simplifications

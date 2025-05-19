@@ -12,7 +12,8 @@ interface ButtonProps {
   fullWidth?: boolean
 }
 
-export function Button({
+// Not a great component but ok for this
+export function BasicButton({
   children,
   onClick,
   disabled = false,

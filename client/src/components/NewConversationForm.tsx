@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createConversation } from "../binding"
-import { Button } from "./Button"
+import { BasicButton } from "./BasicButton"
 
 interface NewConversationFormProps {
   onConversationCreated: () => void
@@ -28,13 +28,13 @@ export function NewConversationForm({ onConversationCreated }: NewConversationFo
 
   return (
     <div className="border-b border-gray-700 p-4 bg-gray-800">
-      <Button
+      <BasicButton
         onClick={handleNewConversation}
         disabled={isLoading}
         fullWidth
       >
         {isLoading ? "Creating..." : "New Conversation"}
-      </Button>
+      </BasicButton>
       {error && <p className="mt-2 text-red-400 text-sm">{error.message}</p>}
     </div>
   )

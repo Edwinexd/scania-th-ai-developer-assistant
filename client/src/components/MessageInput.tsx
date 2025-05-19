@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button } from "./Button"
+import { BasicButton } from "./BasicButton"
 
 interface MessageInputProps {
   onSendMessage: (message: string) => Promise<void>
@@ -50,13 +50,13 @@ export function MessageInput({
             className="flex-1 px-4 py-3 focus:outline-none text-gray-700"
             disabled={isLoading}
           />
-          <Button
+          <BasicButton
             type="submit"
             disabled={!message.trim() || isLoading}
             className="rounded-l-none"
           >
             {isLoading ? loadingText : buttonText}
-          </Button>
+          </BasicButton>
         </div>
       </div>
     </form>
